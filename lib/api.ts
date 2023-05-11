@@ -101,6 +101,30 @@ export async function getAllPostsForHome(preview) {
   return data?.posts
 }
 
+export async function getAllPagesForHome(preview) {
+  const data = await fetchAPI(
+    `
+    query AllPages {
+      pages {
+        edges {
+          node {
+            title
+            slug
+          }
+        }
+      }
+    }
+    `,
+    {
+      variables: {
+        onlyEnabled: !preview,
+        preview,
+      },
+    }
+  )
+  return data?.pages
+}
+
 export async function getPostAndMorePosts(slug, preview, previewData) {
   const postPreview = preview && previewData?.post
   // The slug may be the id of an unpublished post
